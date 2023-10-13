@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["data/chicago_survey.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1524,6 +1524,15 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <li>The economics of the Marvel Cinematic Universe</li>
 <li>Public Opinion or voting patterns after Little Amal visits a city</li>
 </ul>
+<h2 id="proposal">Proposal</h2>
+<p>For my final project, I want to study the question, Is the “The Walk” effective on positively influencing public opinion on refugees?
+“The Walk” is an art project that created Little Amal, a 12-foot puppet that represents a 10-year old Syrian refugee girl, who visits cities across the world to raise awareness about the ongoing refugee crisis. To start, I have pulled data from The Chicago Council on Global Affairs Poll: 2017 Biannual Survey which asks respondents “Do you support or oppose the United States […] Accepting Syrian refugees into the United States?” It is question Q267_1 in the data set and will work as a initial assessment of public opinion before Little Amal began her journey, I will continue to find more data, polled after Little Amal has visited a city. I hypothesize that public opinion will become more supportive. This would mean responses in support of accepting refugees in the United States would go up. If they remain stagnant or go down, it would prove, against my hypothesis, that “The Walk” is not effective. The explanatory variable of interest is whether or not Amal visited a city and the outcome variable is the difference in public opinion towards refugees.</p>
+<h2 id="data">Data</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>initial_assess</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"data/chicago_survey.csv"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
