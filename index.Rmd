@@ -26,4 +26,5 @@ For my final project, I want to study the question, Is the "The Walk" effective 
 
 ```{r}
 initial_assess <- read.csv("data/chicago_survey.csv")
+head(initial_assess)
 ```
