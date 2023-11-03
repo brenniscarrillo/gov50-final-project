@@ -7,24 +7,57 @@ output:
     self_contained: false
 ---
 
+## Milestone 2: Data ##
+
+```{r}
+library(tidyverse)
+library(haven)
+```
+
+```{r}
+survey2017 <- read.csv("data/chicago_survey.csv")
+
+survey2022 <- read_sav("data/2022 Chicago Council Survey Data Set.sav")
+```
 
 
-## Project thoughts ##
+## Milestone 3: Visualitation ##
+
+```{r, syria}
+syria <- survey2017 |>
+  drop_na(q267_1) |>
+  select(caseid, xchicago, xmidwest, q267_1)
+
+syria_responses <- c("Support", "Oppose", "Refused")
+
+syria_plot <- syria |>
+  ggplot(mapping = aes(x = factor(q267_1, syria_responses))) + 
+  geom_bar(fill = "steelblue2") + 
+  labs(
+    x = "Response",
+    y = "Count",
+    title = "2017 Opinions on Accepting Syrian Refugees",
+    subtitle = "Do you support or oppose the United States accepting Syrian refugees into the United States?",
+    caption = "Source: The Chicago Council on Global Affairs Poll: 2017 Biannual Survey"
+  ) + 
+  theme(
+    plot.subtitle = element_text(size = 9)
+  )
+
+syria_plot
+```
+
+
+## Milestone 2: Proposal ##
+
+For my final project, I want to study the question, Is the "The Walk" effective on positively influencing public opinion on refugees?
+"The Walk" is an art project that created Little Amal, a 12-foot puppet that represents a 10-year old Syrian refugee girl, who visits cities  across the world to raise awareness about the ongoing refugee crisis. To start, I have pulled data from The Chicago Council on Global Affairs Poll: 2017 Biannual Survey which asks respondents "Do you support or oppose the United States […] Accepting Syrian refugees into the United States?" It is question Q267_1 in the data set and will work as a initial assessment of public opinion before Little Amal began her journey, I will continue to find more data, polled after Little Amal has visited a city. I hypothesize that public opinion will become more supportive. This would mean responses in support of accepting refugees in the United States would go up. If they remain stagnant or go down, it would prove, against my hypothesis, that “The Walk” is not effective. The explanatory variable of interest is whether or not Amal visited a city and the outcome variable is the difference in public opinion towards refugees.
+
+
+## Milestone 1: Project thoughts ##
 
 I am interested in exploring data related to...
 
 * The economics of the Eras Concert
 * The economics of the Marvel Cinematic Universe
 * Public Opinion or voting patterns after Little Amal visits a city
-
-## Proposal ##
-
-For my final project, I want to study the question, Is the "The Walk" effective on positively influencing public opinion on refugees?
-"The Walk" is an art project that created Little Amal, a 12-foot puppet that represents a 10-year old Syrian refugee girl, who visits cities  across the world to raise awareness about the ongoing refugee crisis. To start, I have pulled data from The Chicago Council on Global Affairs Poll: 2017 Biannual Survey which asks respondents "Do you support or oppose the United States […] Accepting Syrian refugees into the United States?" It is question Q267_1 in the data set and will work as a initial assessment of public opinion before Little Amal began her journey, I will continue to find more data, polled after Little Amal has visited a city. I hypothesize that public opinion will become more supportive. This would mean responses in support of accepting refugees in the United States would go up. If they remain stagnant or go down, it would prove, against my hypothesis, that “The Walk” is not effective. The explanatory variable of interest is whether or not Amal visited a city and the outcome variable is the difference in public opinion towards refugees.
-
-## Data ##
-
-```{r}
-initial_assess <- read.csv("data/chicago_survey.csv")
-head(initial_assess)
-```
