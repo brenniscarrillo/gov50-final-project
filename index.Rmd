@@ -48,6 +48,12 @@ syria_plot
 ```
 
 
+```{r}
+head(survey2017)
+head(survey2022)
+```
+
+
 ## Milestone 2: Proposal ##
 
 For my final project, I want to study the question, Is the "The Walk" effective on positively influencing public opinion on refugees?
