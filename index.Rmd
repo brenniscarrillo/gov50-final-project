@@ -7,32 +7,80 @@ output:
     self_contained: false
 ---
 
-## Milestone 2: Data ##
+## Milestone 4: Analysis ##
+
+After analyzing the results from both surveys, the support to accept refugees does vary based on country of origin. In 2017, there were more people who opposed the United States accepting refugees from Syria. This is not the case for any of the countries from the 2022 survey, and within the survey there was varying support. Proportionally, Afghan refugees received the most amount of opposition at 41%, followed by Taiwanese refugees at 30%, and Ukrainian refugees had the least amount of opposition at 22%. \
+\
+All of these numbers are a substantial increase from the 55% opposition to accept Syrian refugees in 2017. This analysis supports the statement from the hypothesis* that there would not be unilateral support for refugees from different countries. More data needs to be collected to confirm that support has increased over time. \
+\
+\
+*Study has been edited since original proposal. New hypothesis posted below.
+
+
+## Data ##
 
 ```{r}
 library(tidyverse)
 library(haven)
-```
 
-```{r}
 survey2017 <- read.csv("data/chicago_survey.csv")
-
 survey2022 <- read_sav("data/2022 Chicago Council Survey Data Set.sav")
 ```
 
+```{r}
+survey2017 <- survey2017 |>
+  mutate(syria_response = case_when(q267_1 == "Support" ~ "Support",
+                              q267_1 == "Oppose" ~ "Oppose",
+                              q267_1 == "Refused" ~ "Refused"))
 
-## Milestone 3: Visualitation ##
+survey2022 <- survey2022 |>
+  mutate(
+    taiwan_response = case_when(QTW2_1 == 1 ~ "Support", 
+                              QTW2_1 == 2 ~ "Oppose",
+                              QTW2_1 == -1 ~ "Refused"),
+    afghanistan_response = case_when(QAFG2_4A == 1 ~ "Support",
+                              QAFG2_4A == 2 ~ "Oppose",
+                              QAFG2_4A == -1 ~ "Refused"),
+    ukraine_response = case_when(Q250_6 == 1 ~ "Support", 
+                              Q250_6 == 2 ~ "Oppose",
+                              Q250_6 == -1 ~ "Refused")
+  )
+```
 
-```{r, syria}
+```{r, response charts}
 syria <- survey2017 |>
   drop_na(q267_1) |>
-  select(caseid, xchicago, xmidwest, q267_1)
+  select(caseid, xchicago, xmidwest, q267_1, syria_response)
+# head(syria)
 
-syria_responses <- c("Support", "Oppose", "Refused")
+
+taiwan <- survey2022 |>
+  drop_na(QTW2_1) |>
+  select(CaseID, QTW2_1, taiwan_response) # , Q2020VOTE, Q1005, Q1010
+# head(taiwan)
+
+
+afghanistan <- survey2022 |>
+  drop_na(QAFG2_4A) |>
+  select(CaseID, QAFG2_4A, afghanistan_response)
+# head(afghanistan)
+
+
+ukraine <- survey2022 |>
+  drop_na(Q250_6) |>
+  select(CaseID, Q250_6, ukraine_response)
+# head(ukraine)
+
+```
+
+## Visualization ##
+
+```{r, plots}
+response_order <- c("Support", "Oppose", "Refused")
 
 syria_plot <- syria |>
-  ggplot(mapping = aes(x = factor(q267_1, syria_responses))) + 
-  geom_bar(fill = "steelblue2") + 
+  ggplot(mapping = aes(x = factor(syria_response, response_order))) + 
+  geom_bar(fill = "darkorchid2") + 
   labs(
     x = "Response",
     y = "Count",
@@ -44,26 +92,96 @@ syria_plot <- syria |>
     plot.subtitle = element_text(size = 9)
   )
 
+
+taiwan_plot <- taiwan |>
+  ggplot(mapping = aes(x = factor(taiwan_response, response_order))) +
+  geom_bar(fill = "indianred1") + 
+  labs(
+    x = "Response",
+    y = "Count",
+    title = "2022 Opinions on Accepting Taiwanese Refugees",
+    subtitle = "Would you support or oppose the United States accepting Taiwanese refugees into the United States?",
+    caption = "Source: 2022 Chicago Council Survey of American Public Opinion and US Foreign Policy"
+  ) + 
+  theme(
+    plot.subtitle = element_text(size = 9)
+  )
+
+
+afghanistan_plot <- afghanistan |>
+  ggplot(mapping = aes(x = factor(afghanistan_response, 
+                                  response_order))) +
+  geom_bar(fill = "forestgreen") + 
+  labs(
+    x = "Response",
+    y = "Count",
+    title = "2022 Opinions on Accepting Afghan Refugees",
+    subtitle = "Would you support or oppose the United States accepting Afghan refugees into the United States?",
+    caption = "Source: 2022 Chicago Council Survey of American Public Opinion and US Foreign Policy"
+  ) + 
+  theme(
+    plot.subtitle = element_text(size = 9)
+  )
+
+
+ukraine_plot <- ukraine |>
+  ggplot(mapping = aes(x = factor(ukraine_response, response_order))) +
+  geom_bar(fill = "steelblue2") + 
+  labs(
+    x = "Response",
+    y = "Count",
+    title = "2022 Opinions on Accepting Ukrainian Refugees",
+    subtitle = "Would you support or oppose the United States accepting Ukrainian refugees into the United States?",
+    caption = "Source: 2022 Chicago Council Survey of American Public Opinion and US Foreign Policy"
+  ) + 
+  theme(
+    plot.subtitle = element_text(size = 9)
+  )
+
+
 syria_plot
+taiwan_plot
+afghanistan_plot
+ukraine_plot
+
 ```
 
+### Proportions ###
 
 ```{r}
-head(survey2017)
-head(survey2022)
+syria |>
+  group_by(syria_response) |>
+  summarize(n = n()) |>
+  pivot_wider(names_from = syria_response, values_from = n) |>
+  mutate(Prop = Oppose / (Oppose + Support)) |>
+  knitr::kable(digits = 2)
+
+survey2022 |>
+  group_by(taiwan_response) |>
+  summarize(n = n()) |>
+  pivot_wider(names_from = taiwan_response, values_from = n) |>
+  mutate(Prop = Oppose / (Oppose + Support)) |>
+  knitr::kable(digits = 2)
+
+survey2022 |>
+  group_by(afghanistan_response) |>
+  drop_na(afghanistan_response) |>
+  summarize(n = n()) |>
+  pivot_wider(names_from = afghanistan_response, values_from = n) |>
+  mutate(Prop = Oppose / (Oppose + Support)) |>
+  knitr::kable(digits = 2)
+
+survey2022 |>
+  group_by(ukraine_response) |>
+  summarize(n = n()) |>
+  pivot_wider(names_from = ukraine_response, values_from = n) |>
+  mutate(Prop = Oppose / (Oppose + Support)) |>
+  knitr::kable(digits = 2)
 ```
 
 
-## Milestone 2: Proposal ##
 
-For my final project, I want to study the question, Is the "The Walk" effective on positively influencing public opinion on refugees?
-"The Walk" is an art project that created Little Amal, a 12-foot puppet that represents a 10-year old Syrian refugee girl, who visits cities  across the world to raise awareness about the ongoing refugee crisis. To start, I have pulled data from The Chicago Council on Global Affairs Poll: 2017 Biannual Survey which asks respondents "Do you support or oppose the United States […] Accepting Syrian refugees into the United States?" It is question Q267_1 in the data set and will work as a initial assessment of public opinion before Little Amal began her journey, I will continue to find more data, polled after Little Amal has visited a city. I hypothesize that public opinion will become more supportive. This would mean responses in support of accepting refugees in the United States would go up. If they remain stagnant or go down, it would prove, against my hypothesis, that “The Walk” is not effective. The explanatory variable of interest is whether or not Amal visited a city and the outcome variable is the difference in public opinion towards refugees.
+## Proposal ##
 
+For my final project, I want to study the the change in public opinion towards accepting refugees. Inspired by the political art project, "The Walk," I'm curious to see if country of origin has an effect on people's responses and if there was any change over time. "The Walk" is an art project that created Little Amal, a 12-foot puppet that represents a 10-year old Syrian refugee girl, who visits cities  across the world to raise awareness about the ongoing refugee crisis. However, in the last few years there have been more countries where refugees have fled from than just Syria. To start, I have pulled data from The Chicago Council on Global Affairs Poll: 2017 Biannual Survey which asks respondents "Do you support or oppose the United States […] Accepting Syrian refugees into the United States?" It is question Q267_1 in the data set and will work as a initial assessment of public opinion. The same survey was published in 2022 and asked the same question in regards to Taiwanese, Afghan, and Ukrainian refugees. **I hypothesize that public opinion will become more supportive over time, but support will not be equal across the different countries**. This would mean responses in support of accepting refugees in the United States would go up overall, but some countries will have more support than others. If they remain stagnant or go down, it would prove, against my hypothesis, that support for refugee immigration has increased. The explanatory variable of interest is the year and country of origin and the outcome variable is the difference in public opinion towards refugees.
 
-## Milestone 1: Project thoughts ##
-
-I am interested in exploring data related to...
-
-* The economics of the Eras Concert
-* The economics of the Marvel Cinematic Universe
-* Public Opinion or voting patterns after Little Amal visits a city
