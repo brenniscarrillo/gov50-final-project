@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["data/2022 Chicago Council Survey Data Set.sav","data/chicago_survey.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/plots-1.png","index_files/figure-html5/plots-2.png","index_files/figure-html5/plots-3.png","index_files/figure-html5/plots-4.png","index_files/figure-html5/syria-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["data/2022 Chicago Council Survey Data Set.sav","data/chicago_survey.csv","data/little amal.jpg","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/plots-1.png","index_files/figure-html5/plots-2.png","index_files/figure-html5/plots-3.png","index_files/figure-html5/plots-4.png","index_files/figure-html5/syria-1.png","index_files/figure-html5/visualization plots-1.png","index_files/figure-html5/visualization plots-2.png","index_files/figure-html5/visualization plots-3.png","index_files/figure-html5/visualization plots-4.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1517,18 +1517,19 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-article">
-<h2 id="milestone-4-analysis">Milestone 4: Analysis</h2>
-<p>After analyzing the results from both surveys, the support to accept refugees does vary based on country of origin. In 2017, there were more people who opposed the United States accepting refugees from Syria. This is not the case for any of the countries from the 2022 survey, and within the survey there was varying support. Proportionally, Afghan refugees received the most amount of opposition at 41%, followed by Taiwanese refugees at 30%, and Ukrainian refugees had the least amount of opposition at 22%.<br />
+<h2 id="introduction">Introduction</h2>
+<p>For my final project, I am studying the the change in public opinion towards accepting refugees. Inspired by the political art project, “The Walk.” I’m curious to see if country of origin has an effect on people’s responses and if there was any change over time. “The Walk” is an art project that created Little Amal, a 12-foot puppet that represents a 10-year old Syrian refugee girl, who visits cities across the world to raise awareness about the ongoing refugee crisis (To learn more visit her website at <a href="https://www.walkwithamal.org/">www.walkwithamal.org</a>).<br />
 <br />
-All of these numbers are a substantial increase from the 55% opposition to accept Syrian refugees in 2017. This analysis supports the statement from the hypothesis* that there would not be unilateral support for refugees from different countries. More data needs to be collected to confirm that support has increased over time.<br />
-<br />
-<br />
-*Study has been edited since original proposal. New hypothesis posted below.</p>
+However, in the last few years there have been more countries where refugees have fled from than just Syria. I’m interested to see if time and country of origin have an impact on public opinion. <strong>I hypothesize that public opinion will become more supportive over time, but support will not be equal across the different countries</strong>. This would mean responses in support of accepting refugees in the United States would go up overall, but some countries will have more support than others. If they remain stagnant or go down, it would prove, against my hypothesis, that support for refugee immigration has increased.</p>
 <h2 id="data">Data</h2>
+<p>To start, I have pulled data from The Chicago Council on Global Affairs Poll: 2017 Biannual Survey which asks respondents “Do you support or oppose the United States […] Accepting Syrian refugees into the United States?” It is question Q267_1 in the data set and will work as a initial assessment of public opinion. The same survey was published in 2022 and asked the same question in regards to Taiwanese, Afghan, and Ukrainian refugees.<br />
+<br />
+This is going to be a cross-sectional study and the explanatory variable of interest is the year and country of origin and the outcome variable is the difference in public opinion towards refugees.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://haven.tidyverse.org'>haven</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/infer'>infer</a></span><span class='op'>)</span></span>
 <span></span>
 <span><span class='va'>survey2017</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"data/chicago_survey.csv"</span><span class='op'>)</span></span>
 <span><span class='va'>survey2022</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/read_spss.html'>read_sav</a></span><span class='op'>(</span><span class='st'>"data/2022 Chicago Council Survey Data Set.sav"</span><span class='op'>)</span></span></code></pre>
@@ -1536,7 +1537,9 @@ All of these numbers are a substantial increase from the 55% opposition to accep
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>survey2017</span> <span class='op'>&lt;-</span> <span class='va'>survey2017</span> <span class='op'>|&gt;</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='co'>## Adding variables ##</span></span>
+<span></span>
+<span><span class='va'>survey2017</span> <span class='op'>&lt;-</span> <span class='va'>survey2017</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>syria_response <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span><span class='va'>q267_1</span> <span class='op'>==</span> <span class='st'>"Support"</span> <span class='op'>~</span> <span class='st'>"Support"</span>,</span>
 <span>                              <span class='va'>q267_1</span> <span class='op'>==</span> <span class='st'>"Oppose"</span> <span class='op'>~</span> <span class='st'>"Oppose"</span>,</span>
 <span>                              <span class='va'>q267_1</span> <span class='op'>==</span> <span class='st'>"Refused"</span> <span class='op'>~</span> <span class='st'>"Refused"</span><span class='op'>)</span><span class='op'>)</span></span>
@@ -1552,36 +1555,28 @@ All of these numbers are a substantial increase from the 55% opposition to accep
 <span>    ukraine_response <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case_when.html'>case_when</a></span><span class='op'>(</span><span class='va'>Q250_6</span> <span class='op'>==</span> <span class='fl'>1</span> <span class='op'>~</span> <span class='st'>"Support"</span>, </span>
 <span>                              <span class='va'>Q250_6</span> <span class='op'>==</span> <span class='fl'>2</span> <span class='op'>~</span> <span class='st'>"Oppose"</span>,</span>
 <span>                              <span class='va'>Q250_6</span> <span class='op'>==</span> <span class='op'>-</span><span class='fl'>1</span> <span class='op'>~</span> <span class='st'>"Refused"</span><span class='op'>)</span></span>
-<span>  <span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>syria</span> <span class='op'>&lt;-</span> <span class='va'>survey2017</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='op'>)</span></span>
+<span></span>
+<span><span class='co'>## Organizing by country ##</span></span>
+<span></span>
+<span><span class='va'>syria</span> <span class='op'>&lt;-</span> <span class='va'>survey2017</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/drop_na.html'>drop_na</a></span><span class='op'>(</span><span class='va'>q267_1</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>caseid</span>, <span class='va'>xchicago</span>, <span class='va'>xmidwest</span>, <span class='va'>q267_1</span>, <span class='va'>syria_response</span><span class='op'>)</span></span>
-<span><span class='co'># head(syria)</span></span>
-<span></span>
 <span></span>
 <span><span class='va'>taiwan</span> <span class='op'>&lt;-</span> <span class='va'>survey2022</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/drop_na.html'>drop_na</a></span><span class='op'>(</span><span class='va'>QTW2_1</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>CaseID</span>, <span class='va'>QTW2_1</span>, <span class='va'>taiwan_response</span><span class='op'>)</span> <span class='co'># , Q2020VOTE, Q1005, Q1010</span></span>
-<span><span class='co'># head(taiwan)</span></span>
-<span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>CaseID</span>, <span class='va'>QTW2_1</span>, <span class='va'>taiwan_response</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='va'>afghanistan</span> <span class='op'>&lt;-</span> <span class='va'>survey2022</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/drop_na.html'>drop_na</a></span><span class='op'>(</span><span class='va'>QAFG2_4A</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>CaseID</span>, <span class='va'>QAFG2_4A</span>, <span class='va'>afghanistan_response</span><span class='op'>)</span></span>
-<span><span class='co'># head(afghanistan)</span></span>
-<span></span>
 <span></span>
 <span><span class='va'>ukraine</span> <span class='op'>&lt;-</span> <span class='va'>survey2022</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/drop_na.html'>drop_na</a></span><span class='op'>(</span><span class='va'>Q250_6</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>CaseID</span>, <span class='va'>Q250_6</span>, <span class='va'>ukraine_response</span><span class='op'>)</span></span>
-<span><span class='co'># head(ukraine)</span></span></code></pre>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>CaseID</span>, <span class='va'>Q250_6</span>, <span class='va'>ukraine_response</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
-<h2 id="visualization">Visualization</h2>
+<h3 id="response-charts">Response Charts</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>response_order</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Support"</span>, <span class='st'>"Oppose"</span>, <span class='st'>"Refused"</span><span class='op'>)</span></span>
@@ -1649,20 +1644,25 @@ All of these numbers are a substantial increase from the 55% opposition to accep
 <span></span>
 <span><span class='va'>syria_plot</span></span></code></pre>
 </div>
-<img src="index_files/figure-html5/plots-1.png" width="624" />
+<img src="index_files/figure-html5/visualization%20plots-1.png" width="624" />
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>taiwan_plot</span></span></code></pre>
 </div>
-<img src="index_files/figure-html5/plots-2.png" width="624" />
+<img src="index_files/figure-html5/visualization%20plots-2.png" width="624" />
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>afghanistan_plot</span></span></code></pre>
 </div>
-<img src="index_files/figure-html5/plots-3.png" width="624" />
+<img src="index_files/figure-html5/visualization%20plots-3.png" width="624" />
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>ukraine_plot</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/plots-4.png" width="624" /></p>
+<p><img src="index_files/figure-html5/visualization%20plots-4.png" width="624" /></p>
 </div>
+<h2 id="results">Results</h2>
+<p>The plots of responses show there <em>is</em> varied support on accepting refugees. To evaluate the responses properly, we must find the <em>proportion</em> of support each country gets because there is a different number of responses for each country. It is important to note that in the 2022 survey, every participant was asked if they support accepting Taiwanese, Afghan, and Ukrainian refugees, but in the 2017 survey, participants were asked about their support on accepting Syrian refugees based on their response to a prior question.<br />
+<br />
+After analyzing the results from both surveys in a cross-sectional study, the support to accept refugees does vary based on country of origin. In 2017, there were more people who opposed the United States accepting refugees from Syria. This is not the case for any of the countries from the 2022 survey, and within the survey there was varying support. Proportionally, Afghan refugees received the most amount of opposition at 41%, followed by Taiwanese refugees at 30%, and Ukrainian refugees had the least amount of opposition at 22%.<br />
+</p>
 <h3 id="proportions">Proportions</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1671,9 +1671,10 @@ All of these numbers are a substantial increase from the 55% opposition to accep
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from <span class='op'>=</span> <span class='va'>syria_response</span>, values_from <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Prop <span class='op'>=</span> <span class='va'>Oppose</span> <span class='op'>/</span> <span class='op'>(</span><span class='va'>Oppose</span> <span class='op'>+</span> <span class='va'>Support</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span></code></pre>
+<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>2</span>, caption <span class='op'>=</span> <span class='st'>"Proportion of Syrian Support"</span><span class='op'>)</span></span></code></pre>
 </div>
 <table>
+<caption>(#tab:Proportion Plots)Proportion of Syrian Support</caption>
 <thead>
 <tr class="header">
 <th style="text-align: right;">Oppose</th>
@@ -1697,9 +1698,10 @@ All of these numbers are a substantial increase from the 55% opposition to accep
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from <span class='op'>=</span> <span class='va'>taiwan_response</span>, values_from <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Prop <span class='op'>=</span> <span class='va'>Oppose</span> <span class='op'>/</span> <span class='op'>(</span><span class='va'>Oppose</span> <span class='op'>+</span> <span class='va'>Support</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span></code></pre>
+<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>2</span>, caption <span class='op'>=</span> <span class='st'>"Proportion of Taiwanese Support"</span><span class='op'>)</span></span></code></pre>
 </div>
 <table>
+<caption>(#tab:Proportion Plots)Proportion of Taiwanese Support</caption>
 <thead>
 <tr class="header">
 <th style="text-align: right;">Oppose</th>
@@ -1724,9 +1726,10 @@ All of these numbers are a substantial increase from the 55% opposition to accep
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from <span class='op'>=</span> <span class='va'>afghanistan_response</span>, values_from <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Prop <span class='op'>=</span> <span class='va'>Oppose</span> <span class='op'>/</span> <span class='op'>(</span><span class='va'>Oppose</span> <span class='op'>+</span> <span class='va'>Support</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span></code></pre>
+<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>2</span>, caption <span class='op'>=</span> <span class='st'>"Proportion of Afghan Support"</span><span class='op'>)</span></span></code></pre>
 </div>
 <table>
+<caption>(#tab:Proportion Plots)Proportion of Afghan Support</caption>
 <thead>
 <tr class="header">
 <th style="text-align: right;">Oppose</th>
@@ -1750,9 +1753,10 @@ All of these numbers are a substantial increase from the 55% opposition to accep
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from <span class='op'>=</span> <span class='va'>ukraine_response</span>, values_from <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>Prop <span class='op'>=</span> <span class='va'>Oppose</span> <span class='op'>/</span> <span class='op'>(</span><span class='va'>Oppose</span> <span class='op'>+</span> <span class='va'>Support</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span></code></pre>
+<span>  <span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span>digits <span class='op'>=</span> <span class='fl'>2</span>, caption <span class='op'>=</span> <span class='st'>"Proportion of Ukrainian Support"</span><span class='op'>)</span></span></code></pre>
 </div>
 <table>
+<caption>(#tab:Proportion Plots)Proportion of Ukrainian Support</caption>
 <thead>
 <tr class="header">
 <th style="text-align: right;">Oppose</th>
@@ -1771,8 +1775,12 @@ All of these numbers are a substantial increase from the 55% opposition to accep
 </tbody>
 </table>
 </div>
-<h2 id="proposal">Proposal</h2>
-<p>For my final project, I want to study the the change in public opinion towards accepting refugees. Inspired by the political art project, “The Walk,” I’m curious to see if country of origin has an effect on people’s responses and if there was any change over time. “The Walk” is an art project that created Little Amal, a 12-foot puppet that represents a 10-year old Syrian refugee girl, who visits cities across the world to raise awareness about the ongoing refugee crisis. However, in the last few years there have been more countries where refugees have fled from than just Syria. To start, I have pulled data from The Chicago Council on Global Affairs Poll: 2017 Biannual Survey which asks respondents “Do you support or oppose the United States […] Accepting Syrian refugees into the United States?” It is question Q267_1 in the data set and will work as a initial assessment of public opinion. The same survey was published in 2022 and asked the same question in regards to Taiwanese, Afghan, and Ukrainian refugees. <strong>I hypothesize that public opinion will become more supportive over time, but support will not be equal across the different countries</strong>. This would mean responses in support of accepting refugees in the United States would go up overall, but some countries will have more support than others. If they remain stagnant or go down, it would prove, against my hypothesis, that support for refugee immigration has increased. The explanatory variable of interest is the year and country of origin and the outcome variable is the difference in public opinion towards refugees.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Unfortunately, I had believed the final was due December 14 and did not schedule my time well enough to complete a full regression. I will do my best to evaluate the work I was able to complete in time.<br />
+<br />
+This study found there was a significant difference in support for accepting refugees based on country of origin. All of these 2022 results are a substantial increase from the 55% opposition to accept Syrian refugees in 2017. This analysis supports the statement from the hypothesis that there would not be unilateral support for refugees from different countries. If I had more time, I would have collected more data to assess if support had increased over time and complete a proper regression analysis. I would have done a permutation test to analyze the difference in proportions among the countries and evaluate the significance of these results.<br />
+<br />
+Working with different studies, that were all asking different questions made it difficult to gather relevant data. Having all of the necessary questions in one survey, asked to all participants, would have been beneficial in analyzing the results and getting a proper control group. Nonetheless, this was a very stimulating experience and I hope this topic is studied further one day.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

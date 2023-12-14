@@ -7,27 +7,32 @@ output:
     self_contained: false
 ---
 
-## Milestone 4: Analysis ##
+## Introduction ##
 
-After analyzing the results from both surveys, the support to accept refugees does vary based on country of origin. In 2017, there were more people who opposed the United States accepting refugees from Syria. This is not the case for any of the countries from the 2022 survey, and within the survey there was varying support. Proportionally, Afghan refugees received the most amount of opposition at 41%, followed by Taiwanese refugees at 30%, and Ukrainian refugees had the least amount of opposition at 22%. \
+For my final project, I am studying the the change in public opinion towards accepting refugees. Inspired by the political art project, "The Walk." I'm curious to see if country of origin has an effect on people's responses and if there was any change over time. "The Walk" is an art project that created Little Amal, a 12-foot puppet that represents a 10-year old Syrian refugee girl, who visits cities  across the world to raise awareness about the ongoing refugee crisis (To learn more visit her website at [www.walkwithamal.org](https://www.walkwithamal.org/)).\
 \
-All of these numbers are a substantial increase from the 55% opposition to accept Syrian refugees in 2017. This analysis supports the statement from the hypothesis* that there would not be unilateral support for refugees from different countries. More data needs to be collected to confirm that support has increased over time. \
-\
-\
-*Study has been edited since original proposal. New hypothesis posted below.
+However, in the last few years there have been more countries where refugees have fled from than just Syria. I'm interested to see if time and country of origin have an impact on public opinion. **I hypothesize that public opinion will become more supportive over time, but support will not be equal across the different countries**. This would mean responses in support of accepting refugees in the United States would go up overall, but some countries will have more support than others. If they remain stagnant or go down, it would prove, against my hypothesis, that support for refugee immigration has increased.
 
 
 ## Data ##
 
-```{r}
+To start, I have pulled data from The Chicago Council on Global Affairs Poll: 2017 Biannual Survey which asks respondents "Do you support or oppose the United States […] Accepting Syrian refugees into the United States?" It is question Q267_1 in the data set and will work as a initial assessment of public opinion. The same survey was published in 2022 and asked the same question in regards to Taiwanese, Afghan, and Ukrainian refugees. \
+\
+This is going to be a cross-sectional study and the explanatory variable of interest is the year and country of origin and the outcome variable is the difference in public opinion towards refugees.
+
+```{r, loading the data}
 library(tidyverse)
 library(haven)
+library(infer)
 
 survey2017 <- read.csv("data/chicago_survey.csv")
 survey2022 <- read_sav("data/2022 Chicago Council Survey Data Set.sav")
 ```
 
-```{r}
+```{r, formatting the data}
+
+## Adding variables ##
+
 survey2017 <- survey2017 |>
   mutate(syria_response = case_when(q267_1 == "Support" ~ "Support",
                               q267_1 == "Oppose" ~ "Oppose",
@@ -45,37 +50,30 @@ survey2022 <- survey2022 |>
                               Q250_6 == 2 ~ "Oppose",
                               Q250_6 == -1 ~ "Refused")
   )
-```
 
-```{r, response charts}
+## Organizing by country ##
+
 syria <- survey2017 |>
   drop_na(q267_1) |>
   select(caseid, xchicago, xmidwest, q267_1, syria_response)
-# head(syria)
-
 
 taiwan <- survey2022 |>
   drop_na(QTW2_1) |>
-  select(CaseID, QTW2_1, taiwan_response) # , Q2020VOTE, Q1005, Q1010
-# head(taiwan)
-
+  select(CaseID, QTW2_1, taiwan_response)
 
 afghanistan <- survey2022 |>
   drop_na(QAFG2_4A) |>
   select(CaseID, QAFG2_4A, afghanistan_response)
-# head(afghanistan)
-
 
 ukraine <- survey2022 |>
   drop_na(Q250_6) |>
   select(CaseID, Q250_6, ukraine_response)
-# head(ukraine)
-
 ```
 
-## Visualization ##
 
-```{r, plots}
+### Response Charts ###
+
+```{r, visualization plots}
 response_order <- c("Support", "Oppose", "Refused")
 
 syria_plot <- syria |>
@@ -146,22 +144,30 @@ ukraine_plot
 
 ```
 
+
+## Results ##
+
+The plots of responses show there *is* varied support on accepting refugees. To evaluate the responses properly, we must find the *proportion* of support each country gets because there is a different number of responses for each country. It is important to note that in the 2022 survey, every participant was asked if they support accepting Taiwanese, Afghan, and Ukrainian refugees, but in the 2017 survey, participants were asked about their support on accepting Syrian refugees based on their response to a prior question.\
+\
+After analyzing the results from both surveys in a cross-sectional study, the support to accept refugees does vary based on country of origin. In 2017, there were more people who opposed the United States accepting refugees from Syria. This is not the case for any of the countries from the 2022 survey, and within the survey there was varying support. Proportionally, Afghan refugees received the most amount of opposition at 41%, followed by Taiwanese refugees at 30%, and Ukrainian refugees had the least amount of opposition at 22%. \
+
+
 ### Proportions ###
 
-```{r}
+```{r, Proportion Plots}
 syria |>
   group_by(syria_response) |>
   summarize(n = n()) |>
   pivot_wider(names_from = syria_response, values_from = n) |>
   mutate(Prop = Oppose / (Oppose + Support)) |>
-  knitr::kable(digits = 2)
+  knitr::kable(digits = 2, caption = "Proportion of Syrian Support")
 
 survey2022 |>
   group_by(taiwan_response) |>
   summarize(n = n()) |>
   pivot_wider(names_from = taiwan_response, values_from = n) |>
   mutate(Prop = Oppose / (Oppose + Support)) |>
-  knitr::kable(digits = 2)
+  knitr::kable(digits = 2, caption = "Proportion of Taiwanese Support")
 
 survey2022 |>
   group_by(afghanistan_response) |>
@@ -169,19 +175,21 @@ survey2022 |>
   summarize(n = n()) |>
   pivot_wider(names_from = afghanistan_response, values_from = n) |>
   mutate(Prop = Oppose / (Oppose + Support)) |>
-  knitr::kable(digits = 2)
+  knitr::kable(digits = 2, caption = "Proportion of Afghan Support")
 
 survey2022 |>
   group_by(ukraine_response) |>
   summarize(n = n()) |>
   pivot_wider(names_from = ukraine_response, values_from = n) |>
   mutate(Prop = Oppose / (Oppose + Support)) |>
-  knitr::kable(digits = 2)
+  knitr::kable(digits = 2, caption = "Proportion of Ukrainian Support")
 ```
 
 
+## Conclusion ##
 
-## Proposal ##
-
-For my final project, I want to study the the change in public opinion towards accepting refugees. Inspired by the political art project, "The Walk," I'm curious to see if country of origin has an effect on people's responses and if there was any change over time. "The Walk" is an art project that created Little Amal, a 12-foot puppet that represents a 10-year old Syrian refugee girl, who visits cities  across the world to raise awareness about the ongoing refugee crisis. However, in the last few years there have been more countries where refugees have fled from than just Syria. To start, I have pulled data from The Chicago Council on Global Affairs Poll: 2017 Biannual Survey which asks respondents "Do you support or oppose the United States […] Accepting Syrian refugees into the United States?" It is question Q267_1 in the data set and will work as a initial assessment of public opinion. The same survey was published in 2022 and asked the same question in regards to Taiwanese, Afghan, and Ukrainian refugees. **I hypothesize that public opinion will become more supportive over time, but support will not be equal across the different countries**. This would mean responses in support of accepting refugees in the United States would go up overall, but some countries will have more support than others. If they remain stagnant or go down, it would prove, against my hypothesis, that support for refugee immigration has increased. The explanatory variable of interest is the year and country of origin and the outcome variable is the difference in public opinion towards refugees.
-
+Unfortunately, I had believed the final was due December 14 and did not schedule my time well enough to complete a full regression. I will do my best to evaluate the work I was able to complete in time.\
+\
+This study found there was a significant difference in support for accepting refugees based on country of origin. All of these 2022 results are a substantial increase from the 55% opposition to accept Syrian refugees in 2017. This analysis supports the statement from the hypothesis that there would not be unilateral support for refugees from different countries. If I had more time, I would have collected more data to assess if support had increased over time and complete a proper regression analysis. I would have done a permutation test to analyze the difference in proportions among the countries and evaluate the significance of these results.\
+\
+Working with different studies, that were all asking different questions made it difficult to gather relevant data. Having all of the necessary questions in one survey, asked to all participants, would have been beneficial in analyzing the results and getting a proper control group. Nonetheless, this was a very stimulating experience and I hope this topic is studied further one day.
